@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_chars.c                                   :+:      :+:    :+:   */
+/*   ft_print_nbr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zesarayc <zesarayc@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/09/03 22:00:02 by zesarayc          #+#    #+#             */
-/*   Updated: 2026/09/19 19:19:10 by zesarayc         ###   ########.fr       */
+/*   Created: 2026/09/13 03:53:34 by zesarayc          #+#    #+#             */
+/*   Updated: 2026/09/19 18:28:51 by zesarayc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_print_char(int c)
+int	ft_print_nbr(int n)
 {
-	write(1, &c, 1);
-	return (1);
+	int		len;
+	long	num;
+
+	len = 0;
+	num = n;
+	if (num < 0)
+	{
+		len += ft_print_char('-');
+		num = (-1) * num;
+	}
+	if (num > 9)
+		len += ft_print_nbr(num / 10);
+	len += ft_print_char((num % 10) + '0');
+	return (len);
 }
 
-int	ft_print_string(char *str)
+int	ft_print_unsigned(unsigned int n)
 {
 	int	len;
 
 	len = 0;
-	if (!str)
-		return (write(1, "(null)", 6));
-	while (str[len])
-	{
-		write(1, &str[len], 1);
-		len++;
-	}
+	if (n > 9)
+		len += ft_print_unsigned(n / 10);
+	len += ft_print_char((n % 10) + '0');
 	return (len);
 }

@@ -1,33 +1,26 @@
-NAME		= libftprintf.a
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -I./include
+NAME        = libftprintf.a
+CC          = cc
+CFLAGS      = -Wall -Wextra -Werror
 
-SRC_DIR		= src/
-OBJ_DIR		= obj/
+SRCS        = ft_printf.c \
+              ft_print_chars.c \
+              ft_print_nbr.c \
+              ft_print.hex.c
 
-SRC_FILES	= ft_printf.c \
-			  ft_print_chars.c \
-			  ft_print_hex.c \
-			  ft_print_numbers.c
+OBJS        = $(SRCS:.c=.o)
 
-SRCS		= $(addprefix $(SRC_DIR), $(SRC_FILES))
-OBJS		= $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
-
-RM			= rm -rf
+RM          = rm -rf
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
+%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-
 clean:
-	$(RM) $(OBJ_DIR)
+	$(RM) $(OBJS)
 
 fclean: clean
 	$(RM) $(NAME)
@@ -35,4 +28,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-
